@@ -3,8 +3,10 @@ import mongoose, { Model, Schema, Types } from "mongoose";
 interface ITestCase {
     chapter: Types.ObjectId,
     testType: string,
+    className: string,
+    methodName:string,
     testCases: [Types.ObjectId],
-    creator: Types.ObjectId
+    creator: Types.ObjectId,
 }
 
 type ITestCaseModel = Model<ITestCase>
@@ -16,6 +18,8 @@ const TestSchema = new Schema({
         enum: ['function', 'class'],
         default: 'function'
     },
+    className: String,
+    methodName: String,
     testCases: [{ type: Schema.Types.ObjectId, ref: 'test case' }],
     creator: Schema.Types.ObjectId
 });

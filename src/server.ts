@@ -1,8 +1,6 @@
 require('dotenv').config();
 import express, {Request, Response} from "express";
 import cors from "cors";
-import {User} from "./models";
-import mongoose from "mongoose";
 
 const app: express.Application = express();
 
