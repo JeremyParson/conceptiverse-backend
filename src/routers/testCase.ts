@@ -55,6 +55,7 @@ router.post("/:id", async (req, res) => {
       test: test._id
     });
     if (req.body.parameters) testCase.parameters = JSON.parse(req.body.parameters)
+    if (req.body.expectedOutput) testCase.expectedOutput = JSON.parse(req.body.expectedOutput)
     test.testCases.push(testCase._id);
     await testCase.save();
     await test.save();
