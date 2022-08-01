@@ -1,6 +1,6 @@
 import mongoose, { Model, Schema, Types } from "mongoose";
 
-interface ITestCase {
+export interface ITestCase {
     test: Types.ObjectId,
     parameters: [any],
     expectedOutput: any,
