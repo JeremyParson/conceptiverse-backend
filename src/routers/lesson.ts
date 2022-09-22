@@ -18,11 +18,17 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const lesson = await Lesson.findById(req.params.id);
-    await lesson.populate('chapters')
+    await lesson.populate({
+      path: "chapters",
+      populate: [{
+        path: 'test',
+        model: 'test'
+      }]
+    });
+    await lesson
     if (!lesson) {
       return res.status(400).json({ message: "Lesson does not exist" });
     }
-    // const chapters = await Chapter.find({ lesson: req.params.id });
     const { name, _id, description, creator, comments, chapters } = lesson;
     res
       .status(200)
@@ -63,10 +69,10 @@ router.post("/", async (req, res) => {
 
 // Authorization
 router.use("/:id", async (req, res, next) => {
-  const lesson = await Lesson.findById(req.params.id)
+  const lesson = await Lesson.findById(req.params.id);
   if (!lesson)
-      return res.status(400).json({ message: "Lesson does not exist" });
-    
+    return res.status(400).json({ message: "Lesson does not exist" });
+
   if (!req.currentUser._id.equals(lesson.creator)) {
     res
       .status(400)
@@ -79,7 +85,7 @@ router.use("/:id", async (req, res, next) => {
 // Update Lesson
 router.patch("/:id", async (req, res) => {
   try {
-    const lesson = await Lesson.findOne({id: req.params.id});
+    const lesson = await Lesson.findOne({ id: req.params.id });
     for (let key in req.body) lesson.set(key, req.body[key]);
     await lesson.save();
     res.json(lesson).status(200);
@@ -92,9 +98,9 @@ router.patch("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const lesson = await Lesson.findById(req.params.id);
-    await lesson.deleteChapters()
+    await lesson.deleteChapters();
     await lesson.delete();
-    res.json({message: "Lesson deleted"}).status(200);
+    res.json({ message: "Lesson deleted" }).status(200);
   } catch (err) {
     res.status(500).json({ message: "Server ran into an error" });
   }

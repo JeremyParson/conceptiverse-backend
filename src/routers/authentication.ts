@@ -16,7 +16,7 @@ router.post("/", async (req: Request, res: Response) => {
     });
   } else {
     const result = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    res.json({ user: user, token: result });
+    res.status(200).json({ user: user, token: result });
   }
 });
 

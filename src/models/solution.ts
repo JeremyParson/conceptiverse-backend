@@ -1,7 +1,11 @@
 import mongoose, { Model, Schema, Types } from "mongoose";
 
 interface ISolution {
-    code: String,
+    javascript: string,
+    cpp: string,
+    rust: string,
+    python: string,
+    java: string,
     test: Types.ObjectId,
     creator: Types.ObjectId,
 }
@@ -11,7 +15,11 @@ type ISolutionModel = Model<ISolution>;
 
 const SolutionSchema = new Schema(
   {
-    code: String,
+    javascript: String,
+    cpp: String,
+    rust: String,
+    python: String,
+    java: String,
     test: Schema.Types.ObjectId,
     creator: Schema.Types.ObjectId,
   },

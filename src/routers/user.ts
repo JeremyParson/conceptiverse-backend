@@ -35,7 +35,7 @@ router.post('/', async (req: Request, res: Response) => {
         if (err instanceof Error.ValidationError) {
             res.json({"message": "validation failed"}).status(400);
         }
-        res.status(500);
+        res.status(500).json({"message": "something went wrong"});
     }
 })
 

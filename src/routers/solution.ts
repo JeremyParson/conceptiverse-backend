@@ -21,10 +21,10 @@ router.get("/:id", async (req, res) => {
     if (!solution) {
       return res.status(400).json({ message: "solution does not exist" });
     }
-    const { _id, code, creator, test } = solution;
+    const { _id, javascript, creator, test } = solution;
     res
       .status(200)
-      .json({ _id, creator, code, test });
+      .json({ _id, creator, javascript, test });
   } catch (err) {
     res.status(500).json({ message: "Server ran into an error" });
   }
@@ -78,7 +78,8 @@ router.use("/:id", async (req, res, next) => {
 // Update solution
 router.patch("/:id", async (req, res) => {
   try {
-    const solution = await Solution.findOne({id: req.params.id});
+    console.log("UPDATING:", req.params.id)
+    const solution = await Solution.findById(req.params.id);
     for (let key in req.body) solution.set(key, req.body[key]);
     await solution.save();
     res.json(solution).status(200);
